@@ -4,7 +4,7 @@ Get free proxy IPs from FREE IP SHARE websites
 
 The repo reference to the [repo](https://github.com/qiyeboy/IPProxyPool), 
 you can think it is a simplified version.
-##Description
+## Description
 * config.py
 
 this file is a config file, it includes
@@ -32,7 +32,7 @@ this file offer methods that get IPs from database for other
 module or method's call use.
 
 
-##Useage:
+## Useage:
 
 you can use this as a module
 
