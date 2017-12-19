@@ -11,12 +11,14 @@ display.start()
 import argparse
 from datetime import datetime
 import calendar
+import numpy as np
+
 now = datetime.now().today()
 today = str(now.year) + "-" + str(now.month) + "-" + str(now.day)
 parser = argparse.ArgumentParser(description="Usage for this scrpt")
 parser.add_argument('-s', type=str, default=today)
 parser.add_argument('-e', type=str, default=today)
-parser.add_argument('-d', type=str, default="/home/alan/tempdata")
+parser.add_argument('-d', type=str, default="F:/QiuTan")
 args = parser.parse_args()
 startYMD = args.s.split('-')
 endYMD = args.e.split('-')
@@ -32,25 +34,25 @@ prefs = {
          'helperApps.neverAsk.saveToDisk':  True
          }
 options.add_experimental_option('prefs', prefs)
-for ip in ips:
-    options.add_argument('--proxy-server=http://'+ip.ip+':'+ip.port)
-    driver = webdriver.Chrome(chrome_options=options)
-    driver.get(url=url)
+ip = np.random.choice(ips)
+options.add_argument('--proxy-server=http://'+ip.ip+':'+ip.port)
+driver = webdriver.Chrome(chrome_options=options)
+driver.get(url=url)
 
 def downloadThisPageAllLinks(strdate):
     # this two line can set time for data extraction
     driver.find_element_by_xpath('//*[@id="form1"]/div[4]/div[2]/div[1]/input[1]').send_keys(strdate)
     driver.find_element_by_xpath('//*[@id="form1"]/div[4]/div[2]/div[1]/input[2]').click()
     # 172
-
     contents = driver.find_elements_by_class_name("gocheck")
-
     # print(type(contents))
     # this for find
     for content in contents :
         detail_url = content.find_element_by_link_text('查看').get_attribute('href')
         print(detail_url)
-
+        ips = getfreeip(100)
+        ip = np.random.choice(ips)
+        options.add_argument('--proxy-server=http://' + ip.ip + ':' + ip.port)
         ## this is for downloads operation
         threadDriver = webdriver.Chrome(chrome_options=options)
         threadDriver.get(detail_url)
